@@ -4,7 +4,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 # App configuration
-class HistoricalPerformancesConfig(AppConfig):
+class PurchaseOrderConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "vendor_management_system.historical_performances"
-    verbose_name = _("Historical Performances")
+    name = "vendor_management_system.purchase_orders"
+    verbose_name = _("Purchase Orders")
+
+    # Ready method
+    def ready(self):
+        # Import the signals module
+        import vendor_management_system.purchase_orders.signals

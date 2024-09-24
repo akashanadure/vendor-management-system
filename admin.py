@@ -1,49 +1,63 @@
 # Imports
 from django.contrib import admin
 
-from vendor_management_system.historical_performances.models import (
-    HistoricalPerformance,
-)
+from vendor_management_system.purchase_orders.models import PurchaseOrder
 
 
-# Register HistoricalPerformance model in admin
-@admin.register(HistoricalPerformance)
-class HistoricalPerformanceAdmin(admin.ModelAdmin):
+# Register PurchaseOrder model in admin
+@admin.register(PurchaseOrder)
+class PurchaseOrderAdmin(admin.ModelAdmin):
     list_display = [
-        "id",
+        "po_number",
         "vendor",
-        "date",
-        "on_time_delivery_rate",
-        "quality_rating_avg",
-        "average_response_time",
-        "fulfillment_rate",
+        "order_date",
+        "expected_delivery_date",
+        "status",
     ]
-    search_fields = ["id", "vendor__name"]
-    ordering = ["date"]
+    search_fields = ["po_number", "vendor__name"]
+    ordering = ["order_date"]
     fieldsets = (
         (
             None,
             {
                 "fields": (
-                    "id",
+                    "po_number",
                     "vendor",
-                    "date",
-                    "on_time_delivery_rate",
-                    "quality_rating_avg",
-                    "average_response_time",
-                    "fulfillment_rate",
+                    "status",
+                    "quality_rating",
+                )
+            },
+        ),
+        (
+            "Dates",
+            {
+                "fields": (
+                    "order_date",
+                    "issue_date",
+                    "acknowledgment_date",
+                    "expected_delivery_date",
+                    "actual_delivery_date",
+                )
+            },
+        ),
+        (
+            "Items",
+            {
+                "fields": (
+                    "items",
+                    "quantity",
                 )
             },
         ),
     )
     readonly_fields = [
-        "id",
-        "vendor",
-        "date",
-        "on_time_delivery_rate",
-        "quality_rating_avg",
-        "average_response_time",
-        "fulfillment_rate",
+        "po_number",
+        # "vendor",
+        # "order_date",
+        # "issue_date",
+        # "acknowledgment_date",
+        # "expected_delivery_date",
+        # "actual_delivery_date",
     ]
-    ordering = ["date"]
-    list_filter = ["vendor"]
+    ordering = ["order_date"]
+    list_filter = ["status"]
