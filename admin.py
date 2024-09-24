@@ -1,40 +1,44 @@
 # Imports
 from django.contrib import admin
-from django.contrib.auth import admin as auth_admin
-from django.utils.translation import gettext_lazy as _
 
-from vendor_management_system.users.models import User
+from vendor_management_system.vendors.models import Vendor
 
 
-# Register User model in Admin
-@admin.register(User)
-class UserAdmin(auth_admin.UserAdmin):
+# Register Vendor model in admin
+@admin.register(Vendor)
+class VendorAdmin(admin.ModelAdmin):
+    list_display = ["name", "vendor_code"]
+    search_fields = ["name", "vendor_code"]
+    ordering = ["name"]
     fieldsets = (
-        (None, {"fields": ("email", "password")}),
-        (_("Personal info"), {"fields": ("name",)}),
-        (
-            _("Permissions"),
-            {
-                "fields": (
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                    "groups",
-                    "user_permissions",
-                ),
-            },
-        ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
-    )
-    list_display = ["email", "name", "is_superuser"]
-    search_fields = ["name"]
-    ordering = ["id"]
-    add_fieldsets = (
         (
             None,
             {
-                "classes": ("wide",),
-                "fields": ("email", "password1", "password2"),
+                "fields": (
+                    "name",
+                    "contact_details",
+                    "address",
+                    "vendor_code",
+                )
+            },
+        ),
+        (
+            "Performance",
+            {
+                "fields": (
+                    "on_time_delivery_rate",
+                    "quality_rating_avg",
+                    "average_response_time",
+                    "fulfillment_rate",
+                )
             },
         ),
     )
+    readonly_fields = [
+        "vendor_code",
+        # "on_time_delivery_rate",
+        # "quality_rating_avg",
+        # "average_response_time",
+        # "fulfillment_rate",
+    ]
+    ordering = ["name"]

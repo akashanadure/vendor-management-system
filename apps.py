@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 # App configuration
-class UsersConfig(AppConfig):
+class VendorsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "vendor_management_system.users"
-    verbose_name = _("Users")
+    name = "vendor_management_system.vendors"
+    verbose_name = _("Vendors")

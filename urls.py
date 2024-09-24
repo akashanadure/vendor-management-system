@@ -1,19 +1,20 @@
 # Imports
 from django.urls import path
 
-from vendor_management_system.users.views import UserViewSet
+from vendor_management_system.vendors.views import VendorViewSet
 
 
-# Define the URL patterns for the users app
+# Define the URL patterns for the vendors app
 urlpatterns = [
     path(
         "",
-        UserViewSet.as_view({"get": "list"}),
-        name="users--list-users",
+        VendorViewSet.as_view({"get": "list", "post": "create"}),
+        name="vendors--list-create-vendor",
     ),
     path(
-        "<email>/",
-        UserViewSet.as_view({"get": "retrieve"}),
-        name="users--retrieve-user",
+        "<vendor_code>/",
+        VendorViewSet.as_view(
+            {"get": "retrieve", "put": "update", "delete": "destroy"}
+        ),
     ),
 ]
